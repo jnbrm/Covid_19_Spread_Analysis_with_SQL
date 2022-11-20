@@ -1,0 +1,107 @@
+This project aims to provide insight from Covid-19 spread data in various countries. There are 7310 data received from 8 countries that provided insights related to Covid cases (testing, positive result, death cases), Treatment Facility (Hospital, bed availability ratio), Prevention Facility (Handwash facility, vaccination), and Demography (Population, life expectancy, age). 
+
+select location as "Country",
+count(*) as "Number"
+from newtable
+group by "Country"
+
+Country            |Number|
+-------------------+------+
+Andorra            |   985|
+Albania            |   991|
+Africa             |  1003|
+Afghanistan        |   992|
+Angola             |   967|
+Anguilla           |   959|
+Antigua and Barbuda|   422|
+Algeria            |   991|
+
+
+select location as "Country",
+sum(new_cases) as "Case",
+sum(new_deaths) as "Death",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate"
+from newtable
+group by "Country"
+order by "Mortality Rate" desc
+
+Country            |Case    |Death |Mortality Rate|
+-------------------+--------+------+--------------+
+Afghanistan        |  204400|  7829|             3|
+Algeria            |  270924|  6881|             2|
+Antigua and Barbuda|    1233|    32|             2|
+Africa             |12382945|256867|             2|
+Angola             |  103131|  1920|             1|
+Albania            |  333125|  3593|             1|
+Anguilla           |    3904|    13|             0|
+Andorra            |   46664|   157|             0|
+
+
+Africa is the country with highest number of cases and death. Yet, Afghanistan has the highest mortality rate. Albania, Angola, Andorra, and Anguilla are some of the countries that has the least cases and mortality rate.
+
+
+select location as "Country",
+AVG(median_age) as "Age",
+AVG(life_expectancy) as "Expectancy",
+AVG(aged_65_older) as "65+",
+AVG(aged_70_older) as "70+"
+from newtable
+group by "Country"
+order by "Expectancy" asc
+
+Country    |Age     |Expectancy        |65+               |70+               |Mortality Rate|
+-----------+--------+------------------+------------------+------------------+--------------+
+Afghanistan|18.60000| 64.83000183105469|2.5810000896453857|1.3370000123977661|             3|
+Africa     |        |                  |                  |                  |             2|
+Albania    |    38.0| 78.56999969482422|13.187999725341797| 8.642999649047852|             1|
+Angola     |16.79999|61.150001525878906|2.4049999713897705|1.3619999885559082|             1|
+Andorra    |        |  83.7300033569336|                  |                  |             0|
+Anguilla   |        | 81.87999725341797|                  |                  |             0|
+
+
+Based on the demographic analysis, it can be seen that country with lower mortality rate tend to have higher life expectancy from the beginning. Showcasing an optimized well-being and living in the country. Another case is might be due to age factor as there might possibility that higher age leads to more potential of infections due to covid or other viruses. Yet, this data is not showing the similar trend. As Africa with highest mortality rate provide lower senior citizens (65+) compared to Albania.
+
+select location as "City",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate",
+AVG(population) as "Population",
+AVG(gdp_per_capita) as "GDP"
+from newtable
+where location in ('Albania', 'Angola', 'Andorra', 'Anguilla', 'Afghanistan', 'Africa')
+group by location 
+order by "Mortality Rate" desc
+
+City       |Mortality Rate|Population           |GDP              |
+-----------+--------------+---------------------+-----------------+
+Afghanistan|             3|41128772.000000000000|1803.987060546875|
+Africa     |             2|  1426736614.00000000|                 |
+Albania    |             1| 2842318.000000000000| 11803.4306640625|
+Angola     |             1|35588996.000000000000|  5819.4951171875|
+Andorra    |             0|   79843.000000000000|                 |
+Anguilla   |             0|   15877.000000000000|                 |
+
+Based on the table above, it can be portrait that Afghanistan and Africa has some of the highest number of population. This high number of population can ease the spread of the virus and overwhelming the local hospital bed availability. Another factor is GDP. Harvard business review stated that this value can't be inferred to the population's well being yet it can be referred to the country's economic growth. Afghanistan, with the lowest GDP, has the lowest economic growth that lead to the lowest technological growth. This technological and economical growth plays a role in the covid virus spread suppression within the country.
+
+select location as "City",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate",
+AVG(stringency_index) as "Government Response",
+AVG(human_development_index) as "Population Development",
+AVG(handwashing_facilities) as "Handwash Facility"
+from newtable
+where location in ('Albania', 'Angola', 'Andorra', 'Anguilla', 'Afghanistan', 'Africa')
+group by location 
+order by "Mortality Rate" desc
+
+City       |Mortality Rate|Government Response|Population Development|Handwash Facility |
+-----------+--------------+-------------------+----------------------+------------------+
+Afghanistan|             3|  30.41479806177544|    0.5109999775886536| 37.74599838256836|
+Africa     |             2|                   |                      |                  |
+Albania    |             1|  46.88404428183548|    0.7950000166893005|                  |
+Angola     |             1|   56.9002281101817|    0.5809999704360962|26.663999557495117|
+Andorra    |             0|  37.86515765290511|    0.8679999709129333|                  |
+Anguilla   |             0|                   |                      |                  |
+
+Based on the data above, it can be seen that Afghanistan has the highest number of handwash facility in the group. This handwash facilities doesn't seem to have any impact on the mortality rate as country like Angola, with lower mortality rate, has lower number of handwash. In this table, Government's response and population development are the most impactful variables in suppressing the mortality rate. With population development having a higher impact. This is understandable as this can also showcase the population's response and behavior towards covid virus spread. In some countries with lower population development, the government need to pay more attention towards their population and regulate a more strict behavior to suppress the virus's spread.
+
+
+Data : Covid 19 World Data
+Source : https://github.com/owid/covid-19-data/blob/master/public/data/README.md
