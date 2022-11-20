@@ -4,8 +4,8 @@ Source : https://ourworldindata.org/coronavirus
 Confirmed cases
 
 ## Cases Related Data
-total_cases	Total confirmed cases of COVID-19. Counts can include probable cases, where reported.
-new_cases	New confirmed cases of COVID-19. Counts can include probable cases, where reported. In rare cases where our source reports a negative daily change due to a data correction, we set this metric to NA.
+**total_cases**	Total confirmed cases of COVID-19. Counts can include probable cases, where reported.
+**new_cases**	New confirmed cases of COVID-19. Counts can include probable cases, where reported. In rare cases where our source reports a negative daily change due to a data correction, we set this metric to NA.
 new_cases_smoothed	New confirmed cases of COVID-19 (7-day smoothed). Counts can include probable cases, where reported.
 total_cases_per_million	Total confirmed cases of COVID-19 per 1,000,000 people. Counts can include probable cases, where reported.
 new_cases_per_million	New confirmed cases of COVID-19 per 1,000,000 people. Counts can include probable cases, where reported.
