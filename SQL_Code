@@ -1,0 +1,46 @@
+select count(*)
+from newtable
+
+select location as "Country",
+count(*) as "Number"
+from newtable
+group by "Country"
+
+select location as "Country",
+sum(new_cases) as "Case",
+sum(new_deaths) as "Death",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate"
+from newtable
+group by "Country"
+order by "Mortality Rate" desc
+
+select location as "Country",
+AVG(median_age) as "Age",
+AVG(life_expectancy) as "Expectancy",
+AVG(aged_65_older) as "65+",
+AVG(aged_70_older) as "70+",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate"
+from newtable
+where location in ('Albania', 'Angola', 'Andorra', 'Anguilla', 'Afghanistan', 'Africa')
+group by "Country"
+order by "Mortality Rate" desc
+
+select location as "City",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate",
+AVG(population) as "Population",
+AVG(gdp_per_capita) as "GDP"
+from newtable
+where location in ('Albania', 'Angola', 'Andorra', 'Anguilla', 'Afghanistan', 'Africa')
+group by location 
+order by "Mortality Rate" desc
+
+select location as "City",
+sum(new_deaths)*100/sum(new_cases) as "Mortality Rate",
+AVG(stringency_index) as "Government Response",
+AVG(human_development_index) as "Population Development",
+AVG(handwashing_facilities) as "Handwash Facility"
+from newtable
+where location in ('Albania', 'Angola', 'Andorra', 'Anguilla', 'Afghanistan', 'Africa')
+group by location 
+order by "Mortality Rate" desc
+
